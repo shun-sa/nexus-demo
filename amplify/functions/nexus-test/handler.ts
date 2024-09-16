@@ -1,5 +1,5 @@
 import type { Handler } from 'aws-lambda';
-import { Schema } from '../../data/resource';
+import { type Schema } from '../../data/resource';
 
 export const handler: Schema['nexusTest']['functionHandler'] = async (event, context) => {
 
