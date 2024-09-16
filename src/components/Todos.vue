@@ -17,13 +17,30 @@ function listTodos() {
   }); 
 }
 
-function createTodo() {
-  client.models.Todo.create({
-    content: window.prompt("Todo content")
-  }).then(() => {
-    // After creating a new todo, update the list of todos
-    listTodos();
+async function createTodo() {
+  // client.models.Todo.create({
+  //   content: window.prompt("Todo content")
+  // }).then(() => {
+  //   // After creating a new todo, update the list of todos
+  //   listTodos();
+  // });
+  const lambdaResponse = await client.queries.nexusTest({
+    id: "nexus Test : "
+  })
+
+  const lambdaResponseJson = JSON.parse(JSON.stringify(lambdaResponse.data));
+
+  alert(JSON.parse(lambdaResponseJson).data);
+
+  // Dynamodb登録
+  await client.models.Test.create({
+    id: "12345678" as any,
   });
+
+  // Dynamodb一覧取得
+  const test = await client.models.Test.list();
+  console.log(test);
+
 }
     
 // fetch todos when the component is mounted

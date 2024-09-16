@@ -1,4 +1,5 @@
 import { type ClientSchema, a, defineData } from "@aws-amplify/backend";
+import { nexusTest } from "../functions/nexus-test/resource";
 
 /*== STEP 1 ===============================================================
 The section below creates a Todo database table with a "content" field. Try
@@ -10,6 +11,19 @@ const schema = a.schema({
   Todo: a
     .model({
       content: a.string(),
+    })
+    .authorization((allow) => [allow.publicApiKey()]),
+  nexusTest: a
+    .query()
+    .arguments({
+      id: a.string().required(),
+    })
+    .returns(a.json())
+    .handler(a.handler.function(nexusTest))
+    .authorization((allow) => [allow.publicApiKey()]),
+  Test: a
+    .model({
+      id: a.string(),
     })
     .authorization((allow) => [allow.publicApiKey()]),
 });
